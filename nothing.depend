@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1741593106 source:c:\users\admin\documents\ltnc\nothing\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"gameft.h"
+
+1742173979 source:c:\users\admin\documents\ltnc\nothing\gameft.cpp
+	"gameft.h"
+
+1742175080 c:\users\admin\documents\ltnc\nothing\gameft.h
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+
