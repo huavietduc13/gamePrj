@@ -3,6 +3,7 @@
 #include <SDL_image.h>
 #include "gameft.h"
 
+
 using namespace std;
 
 int main(int argc, char *argv[])
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     while(g.isRunnin){
         g.changes();
         g.render();
+        g.update();
     }
     g.quit();
     return 0;

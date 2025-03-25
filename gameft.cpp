@@ -1,15 +1,7 @@
 #include "gameft.h"
+#include "object.h"
 
-SDL_Texture* playerTex;
-
-void game::renderTexture(SDL_Texture *texture, int x, int y, int w, int h, SDL_Renderer* renderer){
-    SDL_Rect dest;
-	dest.x = x;
-	dest.y = y;
-	dest.h = h;
-	dest.w = w;
-	SDL_RenderCopy(renderer, texture, NULL, &dest);
-}
+object* player;
 
 void game::init(const char* title, int x, int y, int width, int height, bool fullscreen){
     isRunnin = 1;
@@ -25,11 +17,7 @@ void game::init(const char* title, int x, int y, int width, int height, bool ful
     renderer = SDL_CreateRenderer(window, -1, 0);
     if(renderer) SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     }
-
-    SDL_Surface* tmpSurface = IMG_Load("img/player.png");
-    playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-    SDL_FreeSurface(tmpSurface);
-
+    player = new object("img/player.png", renderer,25, 25);
 }
 
 void game::changes(){
@@ -47,10 +35,14 @@ void game::changes(){
     }
 }
 
+void game::update(){
+    player->update();
+}
+
 void game::render(){
     SDL_RenderClear(renderer);
 
-    game::renderTexture(playerTex, 0, 0, 800, 600, renderer);
+    player->render();
 
     SDL_RenderPresent(renderer);
 }

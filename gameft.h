@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include "graphs.h"
 using namespace std;
 
 class game{
@@ -18,6 +19,7 @@ public:
     void render();
     void quit();
     bool isRunnin;
+    void update();
 };
 
 #endif // _GAMEFT__H

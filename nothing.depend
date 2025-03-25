@@ -13,3 +13,31 @@
 	<SDL_image.h>
 	<iostream>
 
+1742175080 source:c:\users\admin\documents\ltnc\nothing\gameprj\gameft.cpp
+	"gameft.h"
+
+1742891228 c:\users\admin\documents\ltnc\nothing\gameprj\gameft.h
+	<SDL.h>
+	<SDL_image.h>
+	<iostream>
+	"graphs.h"
+
+1742891273 source:c:\users\admin\documents\ltnc\nothing\gameprj\main.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"gameft.h"
+
+1742892719 c:\users\admin\documents\ltnc\nothing\gameprj\graphs.h
+	"gameft.h"
+
+1742890763 source:c:\users\admin\documents\ltnc\nothing\gameprj\graphs.cpp
+	"graphs.h"
+
+1742897458 source:c:\users\admin\documents\ltnc\nothing\gameprj\object.cpp
+	"object.h"
+
+1742897873 c:\users\admin\documents\ltnc\nothing\gameprj\object.h
+	"gameft.h"
+	"graphs.h"
+
