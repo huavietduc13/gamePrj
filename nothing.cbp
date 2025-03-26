@@ -34,8 +34,11 @@
 		</Compiler>
 		<Unit filename="gameft.cpp" />
 		<Unit filename="gameft.h" />
+		<Unit filename="graphs.cpp" />
 		<Unit filename="graphs.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="object.cpp" />
+		<Unit filename="object.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

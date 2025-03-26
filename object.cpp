@@ -8,13 +8,13 @@ object::object(const char* filename, SDL_Renderer* ren, int x, int y){
 }
 
 void object::update(){
-    srcR.h = 32;
-    srcR.w = 32;
+    srcR.h = 128;
+    srcR.w = 128;
     srcR.x = 0;
     srcR.y = 0;
 
-    destR.h = srcR.h * 2;
-    destR.w = srcR.w * 2;
+    destR.h = 64;
+    destR.w = 64;
     destR.x = xpos;
     destR.y = ypos;
 }
