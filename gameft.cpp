@@ -1,7 +1,7 @@
 #include "gameft.h"
-#include "object.h"
+#include "player.h"
 
-object* player;
+player* Player;
 
 void game::init(const char* title, int x, int y, int width, int height, bool fullscreen){
     isRunnin = 1;
@@ -17,7 +17,7 @@ void game::init(const char* title, int x, int y, int width, int height, bool ful
     renderer = SDL_CreateRenderer(window, -1, 0);
     if(renderer) SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     }
-    player = new object("img/player.png", renderer,25, 25);
+    Player = new object("img/player.png", renderer,25, 25);
 }
 
 void game::changes(){
@@ -28,7 +28,9 @@ void game::changes(){
         isRunnin = 0;
         break;
     case SDL_KEYDOWN:
-        isRunnin = 0;
+        if(e.key.keysym.sym == SDLK_SPACE){
+            Player.jump();                      // Bấm space thì nhảy
+        }
         break;
     default:
         break;
@@ -36,13 +38,13 @@ void game::changes(){
 }
 
 void game::update(){
-    player->update();
+    Player->update();
 }
 
 void game::render(){
     SDL_RenderClear(renderer);
 
-    player->render();
+    Player->render();
 
     SDL_RenderPresent(renderer);
 }

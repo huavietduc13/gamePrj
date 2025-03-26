@@ -23,7 +23,7 @@
 	<iostream>
 	"graphs.h"
 
-1742891273 source:c:\users\admin\documents\ltnc\nothing\gameprj\main.cpp
+1742978152 source:c:\users\admin\documents\ltnc\nothing\gameprj\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -35,7 +35,7 @@
 1742890763 source:c:\users\admin\documents\ltnc\nothing\gameprj\graphs.cpp
 	"graphs.h"
 
-1742897458 source:c:\users\admin\documents\ltnc\nothing\gameprj\object.cpp
+1742978207 source:c:\users\admin\documents\ltnc\nothing\gameprj\object.cpp
 	"object.h"
 
 1742898213 c:\users\admin\documents\ltnc\nothing\gameprj\object.h
