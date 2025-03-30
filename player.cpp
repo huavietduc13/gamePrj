@@ -1,39 +1,34 @@
 #include "player.h"
 
-player::player(const char* filename, SDL_Renderer* ren, int x, int y){
+Player::Player(const char* filename, SDL_Renderer* ren, int x, int y) {
     xpos = x;
     ypos = y;
+    velocityY = 0;
+    isJumping = false;
     renderer = ren;
     objTex = graphs::LoadTexture(filename, renderer);
 }
 
-void player::update(){
-    vY += gravity;
-    ypos += vY;
+void Player::update() {
+    velocityY += gravity;
+    ypos += velocityY;
 
     if (ypos > 500) {
         ypos = 500;
         isJumping = false;
     }
 
-    srcR.h = 128;
-    srcR.w = 128;
-    srcR.x = 0;
-    srcR.y = 0;
-
-    destR.h = 64;
-    destR.w = 64;
-    destR.x = xpos;
-    destR.y = ypos;
+    srcR = { 0, 0, 128, 128 };
+    destR = { xpos, ypos, 64, 64 };
 }
 
-void player::jump() {
+void Player::jump() {
     if (!isJumping) {
-        vY = jumpForce;
-        isJumping = 1;
+        velocityY = jumpForce;
+        isJumping = true;
     }
 }
 
-void player::render(){
+void Player::render() {
     SDL_RenderCopy(renderer, objTex, &srcR, &destR);
 }

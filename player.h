@@ -1,26 +1,32 @@
-#ifndef _PLAYER__H_
-#define _PLAYER__H_
+#ifndef PLAYER_H
+#define PLAYER_H
 
-
-
-#include "gameft.h"
 #include "graphs.h"
+#include <SDL.h>
 
-class object{
+class Player {
 public:
-    object(const char* filename, SDL_Renderer* ren, int x, int y);
-    ~object();
-    void render();
+    Player(const char* filename, SDL_Renderer* ren, int x, int y);
+
     void update();
+    void render();
+    void jump();
+
+    int getX() { return xpos; }
+    int getY() { return ypos; }
+    void setY(int y) { ypos = y; }
+    void resetVelocity() { velocityY = 0; }
+
 private:
-    int xpos,ypos;  // Vị trí
-    int vY;   // Vận tốc theo trục Y
-    const int gravity = 1; // Trọng lực
-    const int jumpForce = -15; // Lực nhảy
+    int xpos, ypos;
+    int velocityY;
+    const int gravity = 1;
+    const int jumpForce = -15;
     bool isJumping;
+
     SDL_Texture* objTex;
     SDL_Rect srcR, destR;
     SDL_Renderer* renderer;
 };
 
-#endif // _PLAYER__H_
+#endif
