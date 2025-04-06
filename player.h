@@ -11,17 +11,24 @@ public:
     void update();
     void render();
     void jump();
+    void moveLeft();
+    void moveRight();
+    void stop();
 
     int getX() { return xpos; }
     int getY() { return ypos; }
     void setY(int y) { ypos = y; }
     void resetVelocity() { velocityY = 0; }
 
+    SDL_Texture* getTexture() { return objTex; }
+    SDL_Rect getDestRect() { return destR; }
+
 private:
     int xpos, ypos;
-    int velocityY;
+    int velocityX, velocityY;
     const int gravity = 1;
     const int jumpForce = -15;
+    const int speed = 3;
     bool isJumping;
 
     SDL_Texture* objTex;

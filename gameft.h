@@ -11,7 +11,7 @@ class game{
 private:
     SDL_Window *window;
     SDL_Renderer *renderer;
-
+    int cameraY = 0;
 public:
     void init(const char* title, int x, int y, int width, int height, bool fullscreen);
     void renderTexture(SDL_Texture *texture, int x, int y, int w, int h, SDL_Renderer* renderer);

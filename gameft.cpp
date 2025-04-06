@@ -7,9 +7,9 @@ Player* player;
 std::vector<Platform*> platforms;
 
 void game::init(const char* title, int x, int y, int width, int height, bool fullscreen) {
-    isRunning = true;
+    isRunnin = true;
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        isRunning = false;
+        isRunnin = false;
         std::cout << "ERROR!";
     } else {
         int fs = fullscreen ? SDL_WINDOW_FULLSCREEN : 0;
@@ -28,6 +28,11 @@ void game::init(const char* title, int x, int y, int width, int height, bool ful
 void game::update() {
     player->update();
 
+    if (player->getY() < cameraY + 200) {
+        cameraY = player->getY() - 200;
+    }
+    if (cameraY > 0) cameraY = 0; // Không để camera di chuyển xuống dưới nhân vật
+
     // Kiểm tra va chạm giữa nhân vật và nền tảng
     for (auto& platform : platforms) {
         SDL_Rect playerRect = { player->getX(), player->getY(), 64, 64 };
@@ -38,18 +43,57 @@ void game::update() {
             player->resetVelocity(); // Đặt lại vận tốc rơi
         }
     }
+
+}
+
+void game::changes() {
+    SDL_Event e;
+    while (SDL_PollEvent(&e)) {
+        switch (e.type) {
+            case SDL_QUIT:
+                isRunnin = false;
+                break;
+            case SDL_KEYDOWN:
+                if (e.key.keysym.sym == SDLK_SPACE) {
+                    player->jump();
+                }
+                if (e.key.keysym.sym == SDLK_LEFT) {
+                    player->moveLeft();
+                }
+                if (e.key.keysym.sym == SDLK_RIGHT) {
+                    player->moveRight();
+                }
+                if (e.key.keysym.sym == SDLK_ESCAPE) {
+                    game::quit();
+                }
+                break;
+            case SDL_KEYUP:
+                if (e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_RIGHT) {
+                    player->stop();
+                }
+                break;
+        }
+    }
 }
 
 void game::render() {
     SDL_RenderClear(renderer);
 
-    // Vẽ nền tảng
-    for (auto& platform : platforms) {
-        platform->render();
+    SDL_Rect playerRect = player->getDestRect();
+    playerRect.y -= cameraY; // Dịch theo camera
+    SDL_RenderCopy(renderer, player->getTexture(), nullptr, &playerRect);
+
+    for (Platform* platform : platforms) {
+        SDL_Rect platformRect = platform->getRect();
+        platformRect.y -= cameraY; // Dịch theo camera
+        SDL_RenderCopy(renderer, platform->getTexture(), nullptr, &platformRect);
     }
 
-    // Vẽ nhân vật
-    player->render();
-
     SDL_RenderPresent(renderer);
+}
+
+void game::quit(){
+    SDL_DestroyWindow(window);
+    SDL_DestroyRenderer(renderer);
+    SDL_Quit();
 }

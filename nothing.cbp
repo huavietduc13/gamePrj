@@ -39,6 +39,10 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="object.cpp" />
 		<Unit filename="object.h" />
+		<Unit filename="platform.cpp" />
+		<Unit filename="platform.h" />
+		<Unit filename="player.cpp" />
+		<Unit filename="player.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

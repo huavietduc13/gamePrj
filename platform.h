@@ -10,6 +10,7 @@ public:
     void render();
 
     SDL_Rect getRect() { return destR; } // Lấy vị trí nền tảng để kiểm tra va chạm
+    SDL_Texture* getTexture() { return texture; }
 
 private:
     SDL_Texture* texture;
