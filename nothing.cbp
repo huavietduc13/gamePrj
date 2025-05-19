@@ -32,6 +32,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="font.h" />
 		<Unit filename="gameft.cpp" />
 		<Unit filename="gameft.h" />
 		<Unit filename="graphs.cpp" />
@@ -43,6 +44,8 @@
 		<Unit filename="platform.h" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
+		<Unit filename="sound.cpp" />
+		<Unit filename="sound.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

@@ -13,19 +13,26 @@
 	<SDL_image.h>
 	<iostream>
 
-1743322681 source:c:\users\admin\documents\ltnc\nothing\gameprj\gameft.cpp
+1747641917 source:c:\users\admin\documents\ltnc\nothing\gameprj\gameft.cpp
 	"gameft.h"
 	"player.h"
 	"platform.h"
 	<vector>
+	<cstdlib>
+	<ctime>
+	<string>
+	<algorithm>
+	"font.h"
+	"sound.h"
 
-1743322269 c:\users\admin\documents\ltnc\nothing\gameprj\gameft.h
+1747639281 c:\users\admin\documents\ltnc\nothing\gameprj\gameft.h
 	<SDL.h>
+	<SDL_ttf.h>
 	<SDL_image.h>
 	<iostream>
 	"graphs.h"
 
-1743320923 source:c:\users\admin\documents\ltnc\nothing\gameprj\main.cpp
+1747562327 source:c:\users\admin\documents\ltnc\nothing\gameprj\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -44,17 +51,28 @@
 	"gameft.h"
 	"graphs.h"
 
-1743323158 source:c:\users\admin\documents\ltnc\nothing\gameprj\player.cpp
+1747639913 source:c:\users\admin\documents\ltnc\nothing\gameprj\player.cpp
 	"player.h"
 
-1743322440 c:\users\admin\documents\ltnc\nothing\gameprj\player.h
+1747642273 c:\users\admin\documents\ltnc\nothing\gameprj\player.h
 	"graphs.h"
 	<SDL.h>
 
-1743322538 c:\users\admin\documents\ltnc\nothing\gameprj\platform.h
+1747559210 c:\users\admin\documents\ltnc\nothing\gameprj\platform.h
 	"graphs.h"
 	<SDL.h>
 
-1742981162 source:c:\users\admin\documents\ltnc\nothing\gameprj\platform.cpp
+1747559398 source:c:\users\admin\documents\ltnc\nothing\gameprj\platform.cpp
 	"platform.h"
+
+1746866644 c:\users\admin\documents\ltnc\nothing\gameprj\font.h
+	<SDL_ttf.h>
+	<string>
+
+1747560624 source:c:\users\admin\documents\ltnc\nothing\gameprj\sound.cpp
+	"sound.h"
+
+1747560624 c:\users\admin\documents\ltnc\nothing\gameprj\sound.h
+	<SDL_mixer.h>
+	<string>
 

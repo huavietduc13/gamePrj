@@ -1,15 +1,15 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef _PLAYER__H
+#define _PLAYER__H
 
 #include "graphs.h"
 #include <SDL.h>
 
 class Player {
 public:
-    Player(const char* filename, SDL_Renderer* ren, int x, int y);
+    Player(SDL_Renderer* ren, int x, int y);
 
     void update();
-    void render();
+    void render(int cameraY);
     void jump();
     void moveLeft();
     void moveRight();
@@ -20,20 +20,32 @@ public:
     void setY(int y) { ypos = y; }
     void resetVelocity() { velocityY = 0; }
 
-    SDL_Texture* getTexture() { return objTex; }
-    SDL_Rect getDestRect() { return destR; }
+    SDL_Texture* getTexture();
+    SDL_Rect getDestRect();
+
+    int velocityY;
+    bool isJumping;
+    void allowJump();
+    int jumpForce = -25;
 
 private:
     int xpos, ypos;
-    int velocityX, velocityY;
+    int velocityX;
     const int gravity = 1;
-    const int jumpForce = -15;
-    const int speed = 3;
-    bool isJumping;
+    const int speed = 5;
 
-    SDL_Texture* objTex;
-    SDL_Rect srcR, destR;
     SDL_Renderer* renderer;
+    SDL_Rect srcR, destR;
+
+    SDL_Texture* runTexture;
+    SDL_Texture* jumpTexture;
+    SDL_Texture* idleTexture;
+
+    bool facingLeft = false;
+    int runFrame = 0;
+    int frameCount = 3;
+    int frameDelay = 8;
+    int frameTick = 0;
 };
 
-#endif
+#endif // _PLAYER__H

@@ -9,7 +9,7 @@ public:
     Platform(const char* filename, SDL_Renderer* ren, int x, int y, int w, int h);
     void render();
 
-    SDL_Rect getRect() { return destR; } // Lấy vị trí nền tảng để kiểm tra va chạm
+    SDL_Rect getRect() { return destR; }
     SDL_Texture* getTexture() { return texture; }
 
 private:
