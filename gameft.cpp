@@ -7,7 +7,7 @@
 #include <string>
 #include <algorithm>
 #include "font.h"
-#include "sound.h"
+#include "score.h"
 
 Player* player;
 std::vector<Platform*> platforms;
@@ -39,6 +39,12 @@ void game::init(const char* title, int x, int y, int width, int height, bool ful
     background = IMG_LoadTexture(renderer, "img/back1.png");
     Sound::init();
     Sound::load();
+    ScoreManager::Init();
+
+    speakerOnTex = IMG_LoadTexture(renderer, "img/speaker_on.png");
+    speakerOffTex = IMG_LoadTexture(renderer, "img/speaker_off.png");
+    speakerRect = { 10, 10, 32, 32 };
+    Mix_Volume(-1, volume);
 }
 
 void game::update() {
@@ -112,15 +118,38 @@ void game::update() {
 
     if (player->getY() - cameraY > 720) {
         isGameOver = true;
+        ScoreManager::SaveHighScore();
         Sound::playGameOver();
         return;
     }
+
+    ScoreManager::UpdateScore(player->getY());
 }
 
 void game::changes() {
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
+            case SDL_MOUSEBUTTONDOWN:
+                if (e.button.button == SDL_BUTTON_LEFT) {
+                    int mx = e.button.x;
+                    int my = e.button.y;
+                    if (mx >= speakerRect.x && mx <= speakerRect.x + speakerRect.w &&
+                        my >= speakerRect.y && my <= speakerRect.y + speakerRect.h) {
+                        isMuted = !isMuted;
+                        Mix_Volume(-1, isMuted ? 0 : volume);
+                    }
+                }
+                break;
+
+            case SDL_MOUSEWHEEL:
+                if (!isMuted) {
+                    volume += e.wheel.y * 8;
+                    volume = std::max(0, std::min(volume, MIX_MAX_VOLUME));
+                    Mix_Volume(-1, volume);
+                }
+                break;
+
             case SDL_QUIT:
                 isRunnin = false;
                 break;
@@ -131,6 +160,8 @@ void game::changes() {
                 }
                 if (isGameOver) {
                     if (e.key.keysym.sym == SDLK_r) {
+                        ScoreManager::Reset();
+                        maxHeightReached = 500;
                         Mix_HaltChannel(-1);
                         delete player;
                         for (auto p : platforms) delete p;
@@ -143,6 +174,7 @@ void game::changes() {
                         return;
                     }
                     if (e.key.keysym.sym == SDLK_m) {
+                        maxHeightReached = 500;
                         Mix_HaltChannel(-1);
                         isInMenu = true;
                         delete player;
@@ -152,14 +184,18 @@ void game::changes() {
                         player = new Player(renderer, 200, 500);
                         platformGenHeight = 500;
                         cameraY = 0;
+                        ScoreManager::Reset();
                         isGameOver = false;
                     }
                     break;
                 }
                 if (e.key.keysym.sym == SDLK_SPACE) {
+                    bool wasJumping = player->isJumping;
                     player->jump();
-                    isBoosted = 0;
-                    Sound::playJump();
+                    if (!wasJumping && player->isJumping) {
+                        Sound::playJump();
+                        isBoosted = 0;
+                    }
                 }
                 if (e.key.keysym.sym == SDLK_LEFT) {
                     player->moveLeft();
@@ -181,8 +217,16 @@ void game::changes() {
 }
 
 void game::render() {
+
+    int barMaxWidth = 100;
+    int barHeight = 10;
+    int barX = speakerRect.x + speakerRect.w + 10;
+    int barY = speakerRect.y + (speakerRect.h - barHeight) / 2;
+    int filledWidth = isMuted ? 0 : (volume * barMaxWidth / MIX_MAX_VOLUME);
+
     if (isInMenu) {
         SDL_RenderClear(renderer);
+
         SDL_Rect bgRect = { 0, 0, 1280, 720 };
         SDL_RenderCopy(renderer, background, nullptr, &bgRect);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -201,6 +245,27 @@ void game::render() {
             FontManager::DrawTextCentered(renderer, infoFont, "Press SPACE to Start", gray, 1280, 400);
             TTF_CloseFont(infoFont);
         }
+
+        infoFont = FontManager::LoadFont("font.ttf", 24);
+        if (infoFont) {
+            SDL_Color black = {0, 0, 0, 255};
+            FontManager::DrawTextCentered(renderer, infoFont, "Use LEFT and RIGHT to Move", black, 1280, 460);
+            FontManager::DrawTextCentered(renderer, infoFont, "Space to Jump", black, 1280, 500);
+            FontManager::DrawTextCentered(renderer, infoFont, "Eat red orb can jump higher", black, 1280, 540);
+            TTF_CloseFont(infoFont);
+        }
+
+        SDL_Texture* speakerTex = isMuted ? speakerOffTex : speakerOnTex;
+        SDL_RenderCopy(renderer, speakerTex, nullptr, &speakerRect);
+
+        SDL_Rect backgroundBar = { barX, barY, barMaxWidth, barHeight };
+        SDL_Rect filledBar = { barX, barY, filledWidth, barHeight };
+
+        SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
+        SDL_RenderFillRect(renderer, &backgroundBar);
+
+        SDL_SetRenderDrawColor(renderer, 0, 200, 0, 255);
+        SDL_RenderFillRect(renderer, &filledBar);
 
         SDL_RenderPresent(renderer);
         return;
@@ -256,6 +321,31 @@ void game::render() {
         SDL_RenderFillRect(renderer, &boosted);
     }
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    TTF_Font* scoretext = FontManager::LoadFont("font.ttf", 24);
+    int score = ScoreManager::GetScore();
+    int highScore = ScoreManager::GetHighScore();
+    if (scoretext) {
+        SDL_Color black = {0, 0, 0, 255};
+        std::string scoreText = "Score: " + std::to_string(score);
+        FontManager::DrawText(renderer, scoretext, scoreText, black, 1000, 10);
+
+        std::string highScoreText = "High Score: " + std::to_string(highScore);
+        FontManager::DrawText(renderer, scoretext, highScoreText, black, 1000, 40);
+
+        TTF_CloseFont(scoretext);
+    }
+
+    SDL_Texture* speakerTex = isMuted ? speakerOffTex : speakerOnTex;
+    SDL_RenderCopy(renderer, speakerTex, nullptr, &speakerRect);
+
+    SDL_Rect backgroundBar = { barX, barY, barMaxWidth, barHeight };
+    SDL_Rect filledBar = { barX, barY, filledWidth, barHeight };
+
+    SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
+    SDL_RenderFillRect(renderer, &backgroundBar);
+
+    SDL_SetRenderDrawColor(renderer, 0, 200, 0, 255);
+    SDL_RenderFillRect(renderer, &filledBar);
 
     SDL_RenderPresent(renderer);
 }
@@ -274,4 +364,6 @@ void game::quit() {
     TTF_Quit();
     SDL_Quit();
     Sound::clean();
+    SDL_DestroyTexture(speakerOnTex);
+    SDL_DestroyTexture(speakerOffTex);
 }

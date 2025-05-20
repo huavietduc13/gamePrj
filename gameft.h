@@ -6,6 +6,7 @@
 #include <SDL_image.h>
 #include <iostream>
 #include "graphs.h"
+#include "sound.h"
 
 using namespace std;
 
@@ -14,7 +15,11 @@ private:
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Texture *background;
-
+    SDL_Texture* speakerOnTex;
+    SDL_Texture* speakerOffTex;
+    SDL_Rect speakerRect;
+    bool isMuted = false;
+    int volume = MIX_MAX_VOLUME;
 
 public:
     int cameraY = 0;

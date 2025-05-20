@@ -13,7 +13,7 @@
 	<SDL_image.h>
 	<iostream>
 
-1747641917 source:c:\users\admin\documents\ltnc\nothing\gameprj\gameft.cpp
+1747732376 source:c:\users\admin\documents\ltnc\nothing\gameprj\gameft.cpp
 	"gameft.h"
 	"player.h"
 	"platform.h"
@@ -23,14 +23,15 @@
 	<string>
 	<algorithm>
 	"font.h"
-	"sound.h"
+	"score.h"
 
-1747639281 c:\users\admin\documents\ltnc\nothing\gameprj\gameft.h
+1747731082 c:\users\admin\documents\ltnc\nothing\gameprj\gameft.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<SDL_image.h>
 	<iostream>
 	"graphs.h"
+	"sound.h"
 
 1747562327 source:c:\users\admin\documents\ltnc\nothing\gameprj\main.cpp
 	<iostream>
@@ -51,7 +52,7 @@
 	"gameft.h"
 	"graphs.h"
 
-1747639913 source:c:\users\admin\documents\ltnc\nothing\gameprj\player.cpp
+1747642248 source:c:\users\admin\documents\ltnc\nothing\gameprj\player.cpp
 	"player.h"
 
 1747642273 c:\users\admin\documents\ltnc\nothing\gameprj\player.h
@@ -75,4 +76,11 @@
 1747560624 c:\users\admin\documents\ltnc\nothing\gameprj\sound.h
 	<SDL_mixer.h>
 	<string>
+
+1747729604 c:\users\admin\documents\ltnc\nothing\gameprj\score.h
+	<fstream>
+	<string>
+
+1747729676 source:c:\users\admin\documents\ltnc\nothing\gameprj\score.cpp
+	"score.h"
 

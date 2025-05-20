@@ -44,6 +44,8 @@
 		<Unit filename="platform.h" />
 		<Unit filename="player.cpp" />
 		<Unit filename="player.h" />
+		<Unit filename="score.cpp" />
+		<Unit filename="score.h" />
 		<Unit filename="sound.cpp" />
 		<Unit filename="sound.h" />
 		<Extensions>
