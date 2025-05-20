@@ -11,6 +11,7 @@
      * Space để nhảy
      * P để pause game
      * Ăn orb màu đỏ có thể nhảy cao hơn
+     * Bấm nút âm thanh để mute/unmute và lăn chuột để điều chỉnh âm lượng
  - Nguồn âm thanh, hình ảnh:
    - Sound icon: https://www.shutterstock.com/vi/image-vector/sound-volume-icons-set-different-signal-2487383811
    - Character: https://indreams.me/collection/ckMnfCmepra
