@@ -20,6 +20,9 @@ private:
     SDL_Rect speakerRect;
     bool isMuted = false;
     int volume = MIX_MAX_VOLUME;
+    bool isGameOver = false;
+    bool isInMenu = true;
+    bool isPaused = false;
 
 public:
     int cameraY = 0;

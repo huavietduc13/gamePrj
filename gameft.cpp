@@ -15,8 +15,6 @@ std::vector<SDL_Rect> boosters;
 int maxHeightReached = 500;
 bool isBoosted = 0;
 int platformGenHeight;
-bool isGameOver = false;
-bool isInMenu = true;
 
 void game::init(const char* title, int x, int y, int width, int height, bool fullscreen) {
     isRunnin = true;
@@ -48,7 +46,7 @@ void game::init(const char* title, int x, int y, int width, int height, bool ful
 }
 
 void game::update() {
-    if (isInMenu || isGameOver) return;
+    if (isInMenu || isGameOver || isPaused) return;
 
     player->update();
 
@@ -154,6 +152,10 @@ void game::changes() {
                 isRunnin = false;
                 break;
             case SDL_KEYDOWN:
+                if (!isInMenu && !isGameOver && e.key.keysym.sym == SDLK_p) {
+                    isPaused = !isPaused;
+                }
+
                 if (isInMenu && e.key.keysym.sym == SDLK_SPACE) {
                     isInMenu = false;
                     return;
@@ -252,6 +254,7 @@ void game::render() {
             FontManager::DrawTextCentered(renderer, infoFont, "Use LEFT and RIGHT to Move", black, 1280, 460);
             FontManager::DrawTextCentered(renderer, infoFont, "Space to Jump", black, 1280, 500);
             FontManager::DrawTextCentered(renderer, infoFont, "Eat red orb can jump higher", black, 1280, 540);
+            FontManager::DrawTextCentered(renderer, infoFont, "Press P to Pause during game", black, 1280, 580);
             TTF_CloseFont(infoFont);
         }
 
@@ -346,6 +349,15 @@ void game::render() {
 
     SDL_SetRenderDrawColor(renderer, 0, 200, 0, 255);
     SDL_RenderFillRect(renderer, &filledBar);
+
+    if (isPaused) {
+        TTF_Font* pauseFont = FontManager::LoadFont("font.ttf", 48);
+        if (pauseFont) {
+            SDL_Color yellow = {255, 255, 0, 255};
+            FontManager::DrawTextCentered(renderer, pauseFont, "PAUSED", yellow, 1280, 360);
+            TTF_CloseFont(pauseFont);
+        }
+    }
 
     SDL_RenderPresent(renderer);
 }

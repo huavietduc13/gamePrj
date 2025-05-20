@@ -25,7 +25,7 @@
 	"font.h"
 	"score.h"
 
-1747731082 c:\users\admin\documents\ltnc\nothing\gameprj\gameft.h
+1747733920 c:\users\admin\documents\ltnc\nothing\gameprj\gameft.h
 	<SDL.h>
 	<SDL_ttf.h>
 	<SDL_image.h>
